@@ -22,10 +22,12 @@ public class Reserva {
             System.out.println("Usuario " + usuarioNome + " ja possui 3 reservas.");
             System.out.println("Nao foi possivel reservar o livro: " + livroTitulo);
         } else {
+            // # reservas do usuario
             int aux = usuario.getQtdReservas();
             aux += 1;
             usuario.setQtdReservas(aux);
 
+            // # reservas do livro
             aux = livro.getQtdReservas();
             aux += 1;
             livro.setQtdReservas(aux); // Como notificar aos observadores que o livro possui mais de 2 reservas?
