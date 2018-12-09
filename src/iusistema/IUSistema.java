@@ -69,10 +69,13 @@ public class IUSistema {
 	    parametros[1] = null;
 	    parametros[2] = null;
 
-        // Entrada de dados
-	    tratarDados(parametros);
+        while (true) {
+            // Entrada de dados
+    	    tratarDados(parametros);
 
-	    executarComando(parametros);
+    	    executarComando(parametros);
+        }
+
     }
 
 }
