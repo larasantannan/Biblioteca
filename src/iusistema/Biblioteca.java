@@ -1,6 +1,10 @@
 
 package iusistema;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Biblioteca {
 
     private static Biblioteca instancia;
@@ -22,7 +26,7 @@ public class Biblioteca {
 	}
 
     private Usuario obterUsuarioPorId(String usuarioId) {
-        Usuario usuario = listaUsuarios.get(usuarioId);
+        Usuario usuario = (Usuario) listaUsuarios.get(usuarioId);
         return usuario;
     }
 

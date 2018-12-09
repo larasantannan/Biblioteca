@@ -1,36 +1,38 @@
 
 package iusistema;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AlunoPosGraduacao implements Usuario {
 
     private String id;
     private String nome;
     private int qtdReservas = 0;
-    private List<Livros> listaReservas = new ArrayList();
+    private List<Livro> listaReservas = new ArrayList();
     private final int limiteEmprestimo = 4;
 
-    @Override
-    public void Usuario(String id, String nome) {
+    public AlunoPosGraduacao(String id, String nome) {
         this.id = id;
         this.nome = nome;
     }
-    
+
     @Override
     public void update() {}
 
     @Override
-    public int getQntReservas() {
+    public int getQtdReservas() {
         return this.qtdReservas;
     }
 
     @Override
-    public void setQntReservas(int qtdReservas) {
+    public void setQtdReservas(int qtdReservas) {
         this.qtdReservas = qtdReservas;
     }
 
     @Override
     public void addLivroReserva(Livro livro) {
-        this.listaReserva.add(livro);
+        this.listaReservas.add(livro);
     }
 
     @Override

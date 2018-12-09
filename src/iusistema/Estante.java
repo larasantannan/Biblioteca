@@ -2,6 +2,8 @@
 package iusistema;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Estante implements SujeitoObservavel {
 
@@ -29,7 +31,7 @@ public class Estante implements SujeitoObservavel {
     }
 
     public Livro getLivroPorId(String livroId) {
-        Livro livro = listaLivros.get(livroId);
+        Livro livro = (Livro) listaLivros.get(livroId);
         return livro;
     }
 

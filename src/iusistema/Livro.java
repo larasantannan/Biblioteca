@@ -9,7 +9,7 @@ public class Livro {
 	private String autores;
 	private String edicao;
 	private String anoPublicacao;
-    private int qntReservas = 0;
+    private int qtdReservas = 0;
 
 	public Livro(String codigo, String titulo, String editora, String autores, String edicao, String anoPublicacao) {
 
@@ -29,11 +29,11 @@ public class Livro {
 		return this.titulo;
 	}
 
-    public int getQntReservas() {
+    public int getQtdReservas() {
         return this.qtdReservas;
     }
 
-    public void setQntReservas(int qtdReservas) {
+    public void setQtdReservas(int qtdReservas) {
         this.qtdReservas = qtdReservas;
     }
 }

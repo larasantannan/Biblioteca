@@ -71,7 +71,7 @@ public class IUSistema {
 
         // Entrada de dados
 	    tratarDados(parametros);
-        
+
 	    executarComando(parametros);
     }
 
