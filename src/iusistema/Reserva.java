@@ -30,6 +30,11 @@ public class Reserva {
             aux += 1;
             livro.setQtdReservas(aux); // Como notificar aos observadores que o livro possui mais de 2 reservas?
 
+            if (livro.getQtdReservas() > 2) {
+                Estante estante = Estante.obterInstancia();
+                estante.notificarObservador(livro);
+            }
+
             usuario.addLivroReserva(livro);
 
             System.out.println("Usuario " + usuarioNome + " efetuou a reserva do livro " + livroTitulo + " com sucesso.");

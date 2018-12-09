@@ -49,10 +49,12 @@ public class Estante implements SujeitoObservavel {
     }
 
     @Override
-    public void notificarObservador() {
+    public void notificarObservador(Livro livro) {
         for (int i = 0; i < observadores.size(); i++) {
             Usuario usuario = (Usuario)observadores.get(i);
 		    usuario.update();
 	    }
+        String livroTitulo = livro.getTitulo();
+        System.out.println("O livro : " + livroTitulo + " possui " + livro.getQtdReservas() + "reservas.");
     }
 }
