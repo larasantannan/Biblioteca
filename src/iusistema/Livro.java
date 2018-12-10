@@ -1,6 +1,10 @@
 
 package iusistema;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Iterator;
+
 public class Livro {
 
     private String id;
@@ -10,6 +14,8 @@ public class Livro {
 	private String edicao;
 	private String anoPublicacao;
     private int qtdReservas = 0;
+    private List<Usuario> listaReservas = new ArrayList();
+    private List<Pair<String, Bool>> listaExemplares = new ArrayList();
 
 	public Livro(String codigo, String titulo, String editora, String autores, String edicao, String anoPublicacao) {
 
@@ -31,6 +37,24 @@ public class Livro {
 
     public int getQtdReservas() {
         return this.qtdReservas;
+    }
+
+    public List<String> getReservasNomes() {
+        List<String> nomes = new ArrayList<>();
+        for (Iterator iterator = listaReservas.iterator(); iterator.hasNext();) {
+            Usuario usuario = (Usuario) iterator.next();
+            nomes.add(usuario.getNome());
+		}
+        return nomes;
+    }
+
+    public void addExemplar(String exemplarId, Bool disponibilidade) {
+        Pair<String, Bool> pair = new Pair<>(exemplarId, disponibilidade);
+        this.listaExemplares.add(pair);
+    }
+    
+    public void addUsuarioReserva(Usuario usuario) {
+        this.listaReservas.add(usuario);
     }
 
     public void setQtdReservas(int qtdReservas) {

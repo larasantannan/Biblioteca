@@ -22,6 +22,10 @@ public class Professor implements Usuario {
         this.notificacao++;
     }
 
+    public int getNotificacoes() {
+        return this.notificacao;
+    }
+    
     @Override
     public int getQtdReservas() {
         return this.qtdReservas;

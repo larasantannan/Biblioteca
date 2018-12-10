@@ -52,7 +52,31 @@ public class Biblioteca {
         estante.addObservador(usuario);
     }
 
-	public void consultarLivro(String livroId) {}
+	public void consultarLivro(String livroId) {
+        Estante estante = Estante.obterInstancia();
+        Livro livro = estante.getLivroPorId(livroId);
+
+        String livroTitulo = livro.getTitulo();
+        int qtdReservas = livro.getQtdReservas();
+        if (qtdReservas != 0) {
+            String nomes = livro.getReservasNomes();
+        }
+
+        // TO DO
+        // (iii) para cada exemplar, deve ser apresentado seu código, seu status (disponível ou emprestado),
+        // e em caso do exemplar estar emprestado deverá ser exibido o nome do usuário que realizou o empréstimo,
+        // a data de empréstimo e a data prevista para devolução. Para solicitar tal consulta,
+        // o usuário deverá digitar o comando “liv”, seguido do código do livro.
+    }
+
 	public void consultarUsuario(String usuarioId) {}
+
+    public void notificacaoProfessor(String usuarioId) {
+        Usuario usuario = (Usuario) obterUsuarioPorId(usuarioId);
+        int aux = usuario.getNotificacoes();
+        String nome = usuario.getNome();
+
+        System.out.println("O professor " + nome + " foi notificado " + aux + " vezes.");
+    }
 
 }

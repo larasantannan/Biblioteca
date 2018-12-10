@@ -38,6 +38,7 @@ public class Reserva {
             }
 
             usuario.addLivroReserva(livro);
+            livro.addUsuarioReserva(usuario);
 
             System.out.println("Usuario " + usuarioNome + " efetuou a reserva do livro " + livroTitulo + " com sucesso.");
         }
