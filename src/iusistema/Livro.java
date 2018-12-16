@@ -15,7 +15,7 @@ public class Livro {
 	private String anoPublicacao;
     private int qtdReservas = 0;
     private List<Usuario> listaReservas = new ArrayList();
-    private List<Pair<String, Bool>> listaExemplares = new ArrayList();
+    private List<Exemplar> listaExemplares = new ArrayList();
 
 	public Livro(String codigo, String titulo, String editora, String autores, String edicao, String anoPublicacao) {
 
@@ -49,10 +49,21 @@ public class Livro {
     }
 
     public void addExemplar(String exemplarId, Bool disponibilidade) {
-        Pair<String, Bool> pair = new Pair<>(exemplarId, disponibilidade);
-        this.listaExemplares.add(pair);
+        Exemplar exemplar = new Exemplar(exemplarId, disponibilidade);
+        this.listaExemplares.add(exemplar);
     }
-    
+
+    public Bool exemplarDisponivel() {
+        Bool disponivel = false;
+        for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
+            if (iterator.next().getDisponibilidade()) {
+                disponivel = true;
+                return disponivel;
+            }
+		}
+        return disponivel;
+    }
+
     public void addUsuarioReserva(Usuario usuario) {
         this.listaReservas.add(usuario);
     }

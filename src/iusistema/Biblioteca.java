@@ -36,7 +36,13 @@ public class Biblioteca {
         return livro;
     }
 
-	public void fazerEmprestimo(String usuarioId, String livroId) {}
+	public void fazerEmprestimo(String usuarioId, String livroId) {
+        Emprestimo emprestimo = Emprestimo.obterInstancia();
+        Usuario usuario = obterUsuarioPorId(usuarioId);
+        Livro livro = obterLivroPorId(livroId);
+        emprestimo.fazerEmprestimo(usuario, livro);
+    }
+
 	public void devolver(String usuarioId, String livroId) {}
 
     public void reservar(String usuarioId, String livroId) {

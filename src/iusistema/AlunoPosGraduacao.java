@@ -1,20 +1,32 @@
 
 package iusistema;
 
+import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.util.Calendar;
 
-public class AlunoPosGraduacao implements Usuario {
+public class AlunoPosGraduacao extends Usuario {
 
     private String id;
     private String nome;
-    private int qtdReservas = 0;
+
+    private int qtdReservas;
     private List<Livro> listaReservas = new ArrayList();
+
+    private EmprestimoBehavior emprestimoBehavior = new RegraAlunoPosGraduacao();
     private final int limiteEmprestimo = 4;
+    private int qtdEmprestimos;
+    private List<Pair<Livro, Exemplar>> listaEmprestimos = new ArrayList();
+    private int tempoEmprestimo = 4;
 
     public AlunoPosGraduacao(String id, String nome) {
         this.id = id;
         this.nome = nome;
+        this.qtdReservas = 0;
+        this.qtdEmprestimos = 0;
+        emprestimoBehavior = new RegraAlunoPosGraduacao();
     }
 
     @Override
@@ -36,7 +48,38 @@ public class AlunoPosGraduacao implements Usuario {
     }
 
     @Override
+    public void addLivroEmprestimo(Livro livro, Exemplar exemplar) {
+        Pair<Livro, Exemplar> pair = new Pair<Livro, Exemplar>(livro, exemplar);
+        this.listaEmprestimos.add(pair);
+        this.qtdEmprestimos += 1;
+    }
+
+    @Override
     public String getNome() {
         return this.nome;
+    }
+
+    @Override
+    public int getQtdEmprestimos() {
+        return this.qtdEmprestimos;
+    }
+    public int getLimiteEmprestimos() {
+        return this.limiteEmprestimo;
+    };
+    @Override
+    public Bool devedor() {
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+            if (!iterator.next().getValue().getDisponibilidade()) {
+                Exemplar exemplar = (Exemplar) iterator.next().getValue();
+                Calendar c = Calendar.getInstance();
+                Date data = new Date();
+                c.setTime(data);
+
+                if (c.after(exemplar.getDataDevolucao())){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
