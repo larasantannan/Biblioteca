@@ -3,5 +3,5 @@ package iusistema;
 
 public interface EmprestimoBehavior {
 
-    public Bool regraEmprestimo(Usuario usuario, Livro livro);
+    public boolean regraEmprestimo(Usuario usuario, Livro livro);
 }

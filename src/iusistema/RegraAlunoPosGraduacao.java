@@ -3,7 +3,7 @@ package iusistema;
 
 public class RegraAlunoPosGraduacao implements EmprestimoBehavior {
 
-    public Bool regraEmprestimo(Usuario usuario, Livro livro) {
+    public boolean regraEmprestimo(Usuario usuario, Livro livro) {
 
         String usuarioNome = usuario.getNome();
         String livroTitulo = livro.getTitulo();
@@ -13,7 +13,7 @@ public class RegraAlunoPosGraduacao implements EmprestimoBehavior {
 
         if (qtdEmprestimos < limiteEmprestimo) {
             String livroId = livro.getId();
-            Bool reservado = usuario.buscarLivroReserva(livroId);
+            boolean reservado = usuario.buscarLivroReserva(livroId);
 
             int qtdReservas = livro.getQtdReservas();
             int qtdExemplaresDisponiveis = livro.getQtdExemplaresDisponiveis();
@@ -21,7 +21,7 @@ public class RegraAlunoPosGraduacao implements EmprestimoBehavior {
             if (reservado || qtdReservas < qtdExemplaresDisponiveis) {
 
                 if (qtdReservas >=  qtdExemplaresDisponiveis && reservado) {
-                    Bool emprestado = usuario.buscarLivroEmprestimo(livroId);
+                    boolean emprestado = usuario.buscarLivroEmprestimo(livroId);
                     if (emprestado) {
                         return true;
                     }

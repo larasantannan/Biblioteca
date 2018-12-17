@@ -4,10 +4,13 @@ package iusistema;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import java.util.Date;
 import java.util.Calendar;
 
 public abstract class Usuario {
+
+    private int notificacao;
 
     private String id;
     private String nome;
@@ -24,6 +27,10 @@ public abstract class Usuario {
     public Usuario() {};
 
     public void update() {};
+
+    public int getNotificacoes() {
+        return this.notificacao;
+    };
 
     public int getQtdReservas() {
         return this.qtdReservas;
@@ -47,10 +54,11 @@ public abstract class Usuario {
         return this.nome;
     };
 
-    public Bool devedor() {
+    public boolean devedor() {
         for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
 
-            Exemplar exemplar = (Exemplar) iterator.next().getValue();
+            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Exemplar exemplar = (Exemplar) pair.getValue();
 
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
@@ -70,8 +78,8 @@ public abstract class Usuario {
         return this.limiteEmprestimo;
     };
 
-    public Bool buscarLivroReserva(String livroId) {
-        Bool reservado = false;
+    public boolean buscarLivroReserva(String livroId) {
+        boolean reservado = false;
         for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
             Livro aux = (Livro) iterator.next();
             String id = aux.getId();
@@ -80,10 +88,13 @@ public abstract class Usuario {
         return reservado;
     };
 
-    public Bool buscarLivroEmprestimo(String livroId) {
-        Bool emprestado = false;
+    public boolean buscarLivroEmprestimo(String livroId) {
+        boolean emprestado = false;
         for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
-            Livro aux = (Livro) iterator.next().getKey();
+
+            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Livro aux = (Livro) pair.getKey();
+
             String id = aux.getId();
             if (livroId == id) emprestado = true;
         }
@@ -100,10 +111,12 @@ public abstract class Usuario {
         this.qtdReservas -= 1;
     };
 
-    // Não implementei nos outros Usuarios
-    public Bool verficarRegras(Livro livro) {
-        emprestimoBehavior.regraEmprestimo(this, livro);
+    public boolean verficarRegras(Livro livro) {
+        return emprestimoBehavior.regraEmprestimo(this, livro);
     };
 
+    public int getTempoEmprestimo() {
+        return this.tempoEmprestimo;
+    };
 
 }

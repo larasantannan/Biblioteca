@@ -13,7 +13,7 @@ public class Livro {
 	private String autores;
 	private String edicao;
 	private String anoPublicacao;
-    private int qtdReservas = 0;
+    private int qtdReservas;
     private List<Usuario> listaReservas = new ArrayList();
     private List<Exemplar> listaExemplares = new ArrayList();
 
@@ -25,6 +25,8 @@ public class Livro {
         this.autores = autores;
 		this.edicao = edicao;
 		this.anoPublicacao = anoPublicacao;
+
+        this.qtdReservas = 0;
 	};
 
 	public String getId() {
@@ -48,26 +50,27 @@ public class Livro {
         return nomes;
     };
 
-    public void addExemplar(String exemplarId, Bool disponibilidade) {
+    public void addExemplar(String exemplarId, boolean disponibilidade) {
         Exemplar exemplar = new Exemplar(exemplarId, disponibilidade);
         this.listaExemplares.add(exemplar);
     };
 
     public Exemplar getExemplarDisponivel() {
-        Exemplar exemplar;
+        Exemplar exemplar = null;
         for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
-            if (iterator.next().getDisponibilidade()) {
-                iterator.next().mudarDisponibilidade();
-                exemplar = (Exemplar) iterator.next();
+            exemplar = (Exemplar) iterator.next();
+            if (exemplar.getDisponibilidade()) {
+                exemplar.mudarDisponibilidade();
                 break;
             }
 		}
         return exemplar;
     };
 
-    public Bool exemplarDisponivel() {
+    public boolean exemplarDisponivel() {
         for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
-            if (iterator.next().getDisponibilidade()) {
+            Exemplar exemplar = (Exemplar) iterator.next();
+            if (exemplar.getDisponibilidade()) {
                 return true;
             }
 		}
@@ -77,7 +80,8 @@ public class Livro {
     public int getQtdExemplaresDisponiveis() {
         int qtd = 0;
         for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
-            if (iterator.next().getDisponibilidade()) {
+            Exemplar exemplar = (Exemplar) iterator.next();
+            if (exemplar.getDisponibilidade()) {
                 qtd += 1;
             }
 		}

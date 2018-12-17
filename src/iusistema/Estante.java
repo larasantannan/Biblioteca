@@ -8,7 +8,7 @@ import java.util.List;
 public class Estante implements SujeitoObservavel {
 
     private static List<Usuario> observadores = new ArrayList<Usuario>();
-    private HashMap<String, Object> listaLivros = new HashMap<String, Object>();
+    private HashMap<String, Livro> listaLivros = new HashMap<String, Livro>();
     private static Estante instancia;
 
     // Preenche a lista de livros no próprio construtor
@@ -44,24 +44,24 @@ public class Estante implements SujeitoObservavel {
         livro = this.listaLivros.get("400");
         livro.addExemplar("08", true);
         livro.addExemplar("09", true);
-    }
+    };
 
     public static Estante obterInstancia() {
         if (instancia == null){
             instancia = new Estante();
         }
         return instancia;
-    }
+    };
 
     public Livro getLivroPorId(String livroId) {
         Livro livro = (Livro) listaLivros.get(livroId);
         return livro;
-    }
+    };
 
     @Override
     public void addObservador(Usuario usuario) {
         observadores.add(usuario);
-    }
+    };
 
     @Override
     public void removerObservador(Usuario usuario) {
@@ -69,7 +69,7 @@ public class Estante implements SujeitoObservavel {
 		if (i >= 0) {
 			observadores.remove(i);
         }
-    }
+    };
 
     @Override
     public void notificarObservador(Livro livro) {
@@ -81,5 +81,5 @@ public class Estante implements SujeitoObservavel {
             String usuarioNome = usuario.getNome();
             System.out.println(usuarioNome + ", o livro : " + livroTitulo + " possui " + livro.getQtdReservas() + "reservas.");
 	    }
-    }
+    };
 }

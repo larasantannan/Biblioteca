@@ -1,5 +1,8 @@
 package iusistema;
 
+import java.util.Date;
+import java.util.Calendar;
+
 public class Emprestimo {
 
     private static Emprestimo instancia;
@@ -24,7 +27,14 @@ public class Emprestimo {
                         usuario.removerReserva(livro);
                     }
 
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(new Date());
+
+                    c.add(c.DAY_OF_MONTH, usuario.getTempoEmprestimo());
+                    Date dataDevolucao = c.getTime();
                     Exemplar exemplar = livro.getExemplarDisponivel();
+
+                    exemplar.setDataDevolucao(dataDevolucao);
                     usuario.addLivroEmprestimo(livro, exemplar);
                     System.out.println("Usuario " + usuarioNome + " efetuou o emprestimo do livro " + livroTitulo + " com sucesso.");
 

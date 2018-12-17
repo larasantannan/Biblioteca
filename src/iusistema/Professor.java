@@ -4,6 +4,7 @@ package iusistema;
 import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -25,10 +26,12 @@ public class Professor extends Usuario {
 
     public Professor(String id, String nome) {
         this.notificacao = 0;
+
         this.id = id;
         this.nome = nome;
+
         this.qtdReservas = 0;
-        this.qtdEmprestimos = 0;
+
         this.emprestimoBehavior = new RegraProfessor();
         this.limiteEmprestimo = Integer.MAX_VALUE;
         this.tempoEmprestimo = 7;
@@ -40,6 +43,7 @@ public class Professor extends Usuario {
         this.notificacao++;
     };
 
+    @Override
     public int getNotificacoes() {
         return this.notificacao;
     };
@@ -72,10 +76,11 @@ public class Professor extends Usuario {
     };
 
     @Override
-    public Bool devedor() {
+    public boolean devedor() {
         for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
 
-            Exemplar exemplar = (Exemplar) iterator.next().getValue();
+            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Exemplar exemplar = (Exemplar) pair.getValue();
 
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
@@ -91,9 +96,56 @@ public class Professor extends Usuario {
     public int getQtdEmprestimos() {
         return this.qtdEmprestimos;
     };
-    
+
+    @Override
     public int getLimiteEmprestimos() {
         return this.limiteEmprestimo;
+    };
+
+    @Override
+    public boolean buscarLivroReserva(String livroId) {
+        boolean reservado = false;
+        for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
+            Livro aux = (Livro) iterator.next();
+            String id = aux.getId();
+            if (livroId == id) reservado = true;
+        }
+        return reservado;
+    };
+
+    @Override
+    public boolean buscarLivroEmprestimo(String livroId) {
+        boolean emprestado = false;
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+
+            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Livro aux = (Livro) pair.getKey();
+
+            String id = aux.getId();
+            if (livroId == id) emprestado = true;
+        }
+        return emprestado;
+    };
+
+    @Override
+    public void removerReserva(Livro livro) {
+        String livroId = livro.getId();
+        for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
+            Livro aux = (Livro) iterator.next();
+            String id = aux.getId();
+            if (livroId == id) iterator.remove();
+        }
+        this.qtdReservas -= 1;
+    };
+
+    @Override
+    public boolean verficarRegras(Livro livro) {
+        return emprestimoBehavior.regraEmprestimo(this, livro);
+    };
+
+    @Override
+    public int getTempoEmprestimo() {
+        return this.tempoEmprestimo;
     };
 
 }

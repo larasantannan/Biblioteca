@@ -59,14 +59,14 @@ public class Biblioteca {
     };
 
 	public void consultarLivro(String livroId) {
-        Estante estante = Estante.obterInstancia();
-        Livro livro = estante.getLivroPorId(livroId);
-
-        String livroTitulo = livro.getTitulo();
-        int qtdReservas = livro.getQtdReservas();
-        if (qtdReservas != 0) {
-            String nomes = livro.getReservasNomes();
-        }
+        // Estante estante = Estante.obterInstancia();
+        // Livro livro = estante.getLivroPorId(livroId);
+        //
+        // String livroTitulo = livro.getTitulo();
+        // int qtdReservas = livro.getQtdReservas();
+        // if (qtdReservas != 0) {
+        //     String nomes = (String) livro.getReservasNomes();
+        // }
 
         // TO DO
         // (iii) para cada exemplar, deve ser apresentado seu código, seu status (disponível ou emprestado),
@@ -80,6 +80,7 @@ public class Biblioteca {
     public void notificacaoProfessor(String usuarioId) {
         Usuario usuario = (Usuario) obterUsuarioPorId(usuarioId);
         int aux = usuario.getNotificacoes();
+        
         String nome = usuario.getNome();
 
         System.out.println("O professor " + nome + " foi notificado " + aux + " vezes.");

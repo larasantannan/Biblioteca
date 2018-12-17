@@ -12,7 +12,7 @@ public class Reserva {
 			instancia = new Reserva();
 		}
 		return instancia;
-	}
+	};
 
     public void reservar(Usuario usuario, Livro livro) {
         String usuarioNome = usuario.getNome();
@@ -21,7 +21,8 @@ public class Reserva {
         if (usuario.getQtdReservas() == 3) {
             System.out.println("Usuario " + usuarioNome + " ja possui 3 reservas.");
             System.out.println("Nao foi possivel reservar o livro: " + livroTitulo);
-        } else {
+        }
+        else {
             // # reservas do usuario
             int aux = usuario.getQtdReservas();
             aux += 1;
@@ -42,5 +43,5 @@ public class Reserva {
 
             System.out.println("Usuario " + usuarioNome + " efetuou a reserva do livro " + livroTitulo + " com sucesso.");
         }
-    }
+    };
 }
