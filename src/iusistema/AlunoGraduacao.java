@@ -1,7 +1,6 @@
 
 package iusistema;
 
-import javafx.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -20,7 +19,7 @@ public class AlunoGraduacao extends Usuario{
     private int limiteEmprestimo;
     private int tempoEmprestimo;
     private int qtdEmprestimos;
-    private List<Pair<Livro, Exemplar>> listaEmprestimos = new ArrayList();
+    private List<Pair> listaEmprestimos = new ArrayList();
 
     public AlunoGraduacao(String id, String nome) {
         this.id = id;
@@ -54,7 +53,7 @@ public class AlunoGraduacao extends Usuario{
 
     @Override
     public void addLivroEmprestimo(Livro livro, Exemplar exemplar) {
-        Pair<Livro, Exemplar> pair = new Pair<Livro, Exemplar>(livro, exemplar);
+        Pair pair = new Pair(livro, exemplar);
         this.listaEmprestimos.add(pair);
         this.qtdEmprestimos += 1;
     };
@@ -68,7 +67,7 @@ public class AlunoGraduacao extends Usuario{
     public boolean devedor() {
         for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
 
-            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Pair pair = (Pair) iterator.next();
             Exemplar exemplar = (Exemplar) pair.getValue();
 
             Calendar c = Calendar.getInstance();
@@ -107,7 +106,7 @@ public class AlunoGraduacao extends Usuario{
         boolean emprestado = false;
         for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
 
-            Pair<Livro, Exemplar> pair = (Pair<Livro, Exemplar>) iterator.next();
+            Pair pair = (Pair) iterator.next();
             Livro aux = (Livro) pair.getKey();
 
             String id = aux.getId();
