@@ -18,7 +18,7 @@ public class Exemplar {
         return this.exemplarId;
     }
 
-    public void mudarDiponibilidade() {
+    public void mudarDisponibilidade() {
         this.disponibilidade = !this.disponibilidade;
     }
 
@@ -28,5 +28,9 @@ public class Exemplar {
 
     public Date getDataDevolucao() {
         return this.dataDevolucao;
+    }
+
+    public void setDataDevolucao(Date data) {
+        this.dataDevolucao = data;
     }
 }

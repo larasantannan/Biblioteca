@@ -25,19 +25,19 @@ public class Livro {
         this.autores = autores;
 		this.edicao = edicao;
 		this.anoPublicacao = anoPublicacao;
-	}
+	};
 
 	public String getId() {
 		return this.id;
-	}
+	};
 
 	public String getTitulo() {
 		return this.titulo;
-	}
+	};
 
     public int getQtdReservas() {
         return this.qtdReservas;
-    }
+    };
 
     public List<String> getReservasNomes() {
         List<String> nomes = new ArrayList<>();
@@ -46,29 +46,49 @@ public class Livro {
             nomes.add(usuario.getNome());
 		}
         return nomes;
-    }
+    };
 
     public void addExemplar(String exemplarId, Bool disponibilidade) {
         Exemplar exemplar = new Exemplar(exemplarId, disponibilidade);
         this.listaExemplares.add(exemplar);
-    }
+    };
 
-    public Bool exemplarDisponivel() {
-        Bool disponivel = false;
+    public Exemplar getExemplarDisponivel() {
+        Exemplar exemplar;
         for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
             if (iterator.next().getDisponibilidade()) {
-                disponivel = true;
-                return disponivel;
+                iterator.next().mudarDisponibilidade();
+                exemplar = (Exemplar) iterator.next();
+                break;
             }
 		}
-        return disponivel;
-    }
+        return exemplar;
+    };
+
+    public Bool exemplarDisponivel() {
+        for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
+            if (iterator.next().getDisponibilidade()) {
+                return true;
+            }
+		}
+        return false;
+    };
+
+    public int getQtdExemplaresDisponiveis() {
+        int qtd = 0;
+        for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
+            if (iterator.next().getDisponibilidade()) {
+                qtd += 1;
+            }
+		}
+        return qtd;
+    };
 
     public void addUsuarioReserva(Usuario usuario) {
         this.listaReservas.add(usuario);
-    }
+    };
 
     public void setQtdReservas(int qtdReservas) {
         this.qtdReservas = qtdReservas;
-    }
+    };
 }

@@ -16,32 +16,32 @@ public class Biblioteca {
         this.listaUsuarios.put("456", new AlunoPosGraduacao("456", "Luiz Fernando Rodrigues"));
         this.listaUsuarios.put("789", new AlunoGraduacao("789", "Pedro Paulo"));
         this.listaUsuarios.put("100", new Professor("100", "Carlos Lucena"));
-    }
+    };
 
 	public static Biblioteca obterInstancia() {
 		if (instancia == null) {
 			instancia = new Biblioteca();
 		}
 		return instancia;
-	}
+	};
 
     private Usuario obterUsuarioPorId(String usuarioId) {
         Usuario usuario = (Usuario) listaUsuarios.get(usuarioId);
         return usuario;
-    }
+    };
 
     private Livro obterLivroPorId(String livroId) {
         Estante estante = Estante.obterInstancia();
         Livro livro = estante.getLivroPorId(livroId);
         return livro;
-    }
+    };
 
 	public void fazerEmprestimo(String usuarioId, String livroId) {
         Emprestimo emprestimo = Emprestimo.obterInstancia();
         Usuario usuario = obterUsuarioPorId(usuarioId);
         Livro livro = obterLivroPorId(livroId);
         emprestimo.fazerEmprestimo(usuario, livro);
-    }
+    };
 
 	public void devolver(String usuarioId, String livroId) {}
 
@@ -50,13 +50,13 @@ public class Biblioteca {
         Usuario usuario = obterUsuarioPorId(usuarioId);
         Livro livro = obterLivroPorId(livroId);
         reserva.reservar(usuario, livro);
-    }
+    };
 
     public void observar(String usuarioId, String livroId) {
         Estante estante = Estante.obterInstancia();
         Usuario usuario = obterUsuarioPorId(usuarioId);
         estante.addObservador(usuario);
-    }
+    };
 
 	public void consultarLivro(String livroId) {
         Estante estante = Estante.obterInstancia();
@@ -73,9 +73,9 @@ public class Biblioteca {
         // e em caso do exemplar estar emprestado deverá ser exibido o nome do usuário que realizou o empréstimo,
         // a data de empréstimo e a data prevista para devolução. Para solicitar tal consulta,
         // o usuário deverá digitar o comando “liv”, seguido do código do livro.
-    }
+    };
 
-	public void consultarUsuario(String usuarioId) {}
+	public void consultarUsuario(String usuarioId) {};
 
     public void notificacaoProfessor(String usuarioId) {
         Usuario usuario = (Usuario) obterUsuarioPorId(usuarioId);
@@ -83,6 +83,6 @@ public class Biblioteca {
         String nome = usuario.getNome();
 
         System.out.println("O professor " + nome + " foi notificado " + aux + " vezes.");
-    }
+    };
 
 }
