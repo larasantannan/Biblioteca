@@ -6,6 +6,7 @@ public class Exemplar {
 
     private String exemplarId;
     private boolean disponibilidade;
+    private Date dataEmprestimo;
     private Date dataDevolucao;
 
     public Exemplar(String exemplarId, boolean disponibilidade) {
@@ -32,5 +33,13 @@ public class Exemplar {
 
     public void setDataDevolucao(Date data) {
         this.dataDevolucao = data;
+    };
+
+    public void setDataEmprestimo(Date data) {
+        this.dataEmprestimo = data;
+    };
+
+    public Date getDataEmprestimo() {
+        return this.dataEmprestimo;
     };
 }

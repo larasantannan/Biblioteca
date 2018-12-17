@@ -4,6 +4,7 @@ package iusistema;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Date;
 
 public class Livro {
 
@@ -41,13 +42,15 @@ public class Livro {
         return this.qtdReservas;
     };
 
-    public List<String> getReservasNomes() {
-        List<String> nomes = new ArrayList<>();
-        for (Iterator iterator = listaReservas.iterator(); iterator.hasNext();) {
+    public void getReservasNomes() {
+        System.out.println("Lista de usuarios que reservaram o livro:");
+        for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
             Usuario usuario = (Usuario) iterator.next();
-            nomes.add(usuario.getNome());
+            String nome = usuario.getNome();
+
+            System.out.print(nome + " ");
 		}
-        return nomes;
+        System.out.println();
     };
 
     public void addExemplar(String exemplarId, boolean disponibilidade) {
@@ -60,7 +63,13 @@ public class Livro {
         for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
             exemplar = (Exemplar) iterator.next();
             if (exemplar.getDisponibilidade()) {
+                iterator.remove();
+
                 exemplar.mudarDisponibilidade();
+
+                String exemplarId = exemplar.getExemplarId();
+                boolean exemplarDisponibilidade = exemplar.getDisponibilidade();
+                this.addExemplar(exemplarId, exemplarDisponibilidade);
                 break;
             }
 		}
@@ -94,5 +103,45 @@ public class Livro {
 
     public void setQtdReservas(int qtdReservas) {
         this.qtdReservas = qtdReservas;
+    };
+
+    public void setDisponibilidadeExemplarLista(Exemplar exemplar){
+        String exemplarId = exemplar.getExemplarId();
+        Exemplar aux = null;
+        for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
+            aux = (Exemplar) iterator.next();
+            String auxId = aux.getExemplarId();
+
+            if (exemplarId == auxId) {
+                iterator.remove();
+                aux.mudarDisponibilidade();
+
+                boolean exemplarDisponibilidade = aux.getDisponibilidade();
+                this.addExemplar(auxId, exemplarDisponibilidade);
+                break;
+            }
+        }
+    };
+
+    public void printListaExemplares() {
+        System.out.println("Lista de exemplares:");
+        for (Iterator iterator = this.listaExemplares.iterator(); iterator.hasNext();) {
+            Exemplar exemplar = (Exemplar) iterator.next();
+            String id = exemplar.getExemplarId();
+            boolean status = exemplar.getDisponibilidade();
+
+            if (status) {
+                System.out.println("O exemplar " + id + " esta disponivel.");
+            }
+            else {
+                Date dataEmprestimo = exemplar.getDataEmprestimo();
+                Date dataPrevisao = exemplar.getDataDevolucao();
+                //System.out.println("O exemplar " + id + " esta emprestado para o usuario " + usuarioNome + ".");
+                System.out.println("Emprestimo efetuado em: " + dataEmprestimo
+                                 + " com previsao de devolucao para ate: " + dataPrevisao + ".");
+            }
+		}
+
+        System.out.println();
     };
 }

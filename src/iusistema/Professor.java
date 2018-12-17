@@ -15,7 +15,7 @@ public class Professor extends Usuario {
     private String nome;
 
     private int qtdReservas;
-    private List<Livro> listaReservas = new ArrayList();
+    private List<LivDat> listaReservas = new ArrayList();
 
     private EmprestimoBehavior emprestimoBehavior;
     private int limiteEmprestimo;
@@ -59,7 +59,9 @@ public class Professor extends Usuario {
 
     @Override
     public void addLivroReserva(Livro livro) {
-        this.listaReservas.add(livro);
+        Date data = new Date();
+        LivDat duo = new LivDat(livro, data);
+        this.listaReservas.add(duo);
     };
 
     @Override
@@ -101,11 +103,11 @@ public class Professor extends Usuario {
         return this.limiteEmprestimo;
     };
 
-    @Override
     public boolean buscarLivroReserva(String livroId) {
         boolean reservado = false;
         for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
-            Livro aux = (Livro) iterator.next();
+            LivDat duo = (LivDat) iterator.next();
+            Livro aux = (Livro) duo.getKey();
             String id = aux.getId();
             if (livroId == id) reservado = true;
         }
@@ -130,7 +132,8 @@ public class Professor extends Usuario {
     public void removerReserva(Livro livro) {
         String livroId = livro.getId();
         for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
-            Livro aux = (Livro) iterator.next();
+            LivDat duo = (LivDat) iterator.next();
+            Livro aux = (Livro) duo.getKey();
             String id = aux.getId();
             if (livroId == id) iterator.remove();
         }
@@ -147,4 +150,37 @@ public class Professor extends Usuario {
         return this.tempoEmprestimo;
     };
 
+    @Override
+    public void removerEmprestimo(Livro livro) {
+
+        // Buscar livro emprestado e exemplar
+        Pair emprestado = null;
+        String livroId = livro.getId();
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+            Pair pair = (Pair) iterator.next();
+            Livro aux = (Livro) pair.getKey();
+            String id = aux.getId();
+            if (livroId == id) {
+                emprestado = pair;
+                break;
+            }
+        }
+
+        // Remover da lista de emprestimos
+        Livro aux = null;
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+            Pair pair = (Pair) iterator.next();
+            aux = (Livro) pair.getKey();
+            String id = aux.getId();
+            if (livroId == id) {
+                iterator.remove();
+                break;
+            }
+        }
+        this.qtdEmprestimos -= 1;
+
+        // Mudar disponibilidade do exemplar do livro aux
+        Exemplar exemplar = emprestado.getValue();
+        aux.setDisponibilidadeExemplarLista(exemplar);
+    };
 }

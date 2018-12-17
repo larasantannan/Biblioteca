@@ -43,7 +43,12 @@ public class Biblioteca {
         emprestimo.fazerEmprestimo(usuario, livro);
     };
 
-	public void devolver(String usuarioId, String livroId) {}
+	public void devolver(String usuarioId, String livroId) {
+        Emprestimo emprestimo = Emprestimo.obterInstancia();
+        Usuario usuario = obterUsuarioPorId(usuarioId);
+        Livro livro = obterLivroPorId(livroId);
+        emprestimo.devolver(usuario, livro);
+    };
 
     public void reservar(String usuarioId, String livroId) {
         Reserva reserva = Reserva.obterInstancia();
@@ -59,28 +64,35 @@ public class Biblioteca {
     };
 
 	public void consultarLivro(String livroId) {
-        // Estante estante = Estante.obterInstancia();
-        // Livro livro = estante.getLivroPorId(livroId);
-        //
-        // String livroTitulo = livro.getTitulo();
-        // int qtdReservas = livro.getQtdReservas();
-        // if (qtdReservas != 0) {
-        //     String nomes = (String) livro.getReservasNomes();
-        // }
+        Estante estante = Estante.obterInstancia();
+        Livro livro = estante.getLivroPorId(livroId);
 
-        // TO DO
-        // (iii) para cada exemplar, deve ser apresentado seu código, seu status (disponível ou emprestado),
-        // e em caso do exemplar estar emprestado deverá ser exibido o nome do usuário que realizou o empréstimo,
-        // a data de empréstimo e a data prevista para devolução. Para solicitar tal consulta,
-        // o usuário deverá digitar o comando “liv”, seguido do código do livro.
+        String livroTitulo = livro.getTitulo();
+        System.out.println("Titulo: " + livroTitulo);
+
+        int qtdReservas = livro.getQtdReservas();
+        System.out.println("Quantidade de reservas: " + qtdReservas);
+
+        if (qtdReservas != 0) {
+            livro.getReservasNomes();
+        }
+
+        livro.printListaExemplares();
     };
 
-	public void consultarUsuario(String usuarioId) {};
+	public void consultarUsuario(String usuarioId) {
+
+        Usuario usuario = this.obterUsuarioPorId(usuarioId);
+        // Listar esmprestimos correntes
+        // Listar emprestimos passados
+        usuario.printReservas();
+
+    };
 
     public void notificacaoProfessor(String usuarioId) {
         Usuario usuario = (Usuario) obterUsuarioPorId(usuarioId);
         int aux = usuario.getNotificacoes();
-        
+
         String nome = usuario.getNome();
 
         System.out.println("O professor " + nome + " foi notificado " + aux + " vezes.");

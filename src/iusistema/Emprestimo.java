@@ -27,6 +27,7 @@ public class Emprestimo {
                         usuario.removerReserva(livro);
                     }
 
+                    // Efetuar emprestimo
                     Calendar c = Calendar.getInstance();
                     c.setTime(new Date());
 
@@ -34,6 +35,7 @@ public class Emprestimo {
                     Date dataDevolucao = c.getTime();
                     Exemplar exemplar = livro.getExemplarDisponivel();
 
+                    exemplar.setDataEmprestimo(new Date());
                     exemplar.setDataDevolucao(dataDevolucao);
                     usuario.addLivroEmprestimo(livro, exemplar);
                     System.out.println("Usuario " + usuarioNome + " efetuou o emprestimo do livro " + livroTitulo + " com sucesso.");
@@ -53,18 +55,23 @@ public class Emprestimo {
             System.out.println("O usuario " + usuarioNome + " nao pode efetuar o emprestimo.");
         }
     };
+
+    public void devolver(Usuario usuario, Livro livro) {
+        String usuarioNome = usuario.getNome();
+        String livroTitulo = livro.getTitulo();
+        String livroId = livro.getId();
+        boolean emprestado = usuario.buscarLivroEmprestimo(livroId);
+
+        if (emprestado) {
+            usuario.removerEmprestimo(livro);
+            System.out.println("Devolucao concluida:");
+            System.out.println("O usuario " + usuarioNome + " devolveu o livro " + livroTitulo + ".");
+        }
+        else {
+            System.out.println("Devolucao nao foi concluida:");
+            System.out.println("O usuario " + usuarioNome + " nao possui um emprestimo ativo");
+            System.out.println("do livro " + livroTitulo + ".");
+
+        }
+    };
 }
-
-
-// (i) houver a disponibilidade de algum exemplar daquele livro na biblioteca;
-// (ii) o usuário não estiver “devedor” de um livro em atraso;
-// (iii) forem obedecidas as regras específicas daquele tipo de usuário
-//       no que se refere à quantidade máxima de empréstimos, de acordo com a Tabela 2;
-// (iv) a quantidade de reservas existentes do livro for menor do que a quantidade de exemplares disponíveis,
-//      caso o usuário não tenha reserva para ele;
-// (vi) a quantidade de reservas for maior ou igual a de exemplares, mas uma das reservas é do usuário;
-// (vi) o usuário não tiver nenhum empréstimo em curso de um exemplar daquele mesmo livro.
-
-
-// (i) houver a disponibilidade de algum exemplar daquele livro na biblioteca;
-// (ii) o usuário não estiver “devedor” de um livro em atraso.

@@ -15,7 +15,7 @@ public abstract class Usuario {
     private String nome;
 
     private int qtdReservas;
-    private List<Livro> listaReservas = new ArrayList();
+    private List<LivDat> listaReservas = new ArrayList();
 
     private EmprestimoBehavior emprestimoBehavior;
     private int limiteEmprestimo;
@@ -40,7 +40,9 @@ public abstract class Usuario {
     };
 
     public void addLivroReserva(Livro livro) {
-        this.listaReservas.add(livro);
+        Date data = new Date();
+        LivDat duo = new LivDat(livro, data);
+        this.listaReservas.add(duo);
     };
 
     public void addLivroEmprestimo(Livro livro, Exemplar exemplar) {
@@ -80,7 +82,8 @@ public abstract class Usuario {
     public boolean buscarLivroReserva(String livroId) {
         boolean reservado = false;
         for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
-            Livro aux = (Livro) iterator.next();
+            LivDat duo = (LivDat) iterator.next();
+            Livro aux = (Livro) duo.getKey();
             String id = aux.getId();
             if (livroId == id) reservado = true;
         }
@@ -103,7 +106,8 @@ public abstract class Usuario {
     public void removerReserva(Livro livro) {
         String livroId = livro.getId();
         for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
-            Livro aux = (Livro) iterator.next();
+            LivDat duo = (LivDat) iterator.next();
+            Livro aux = (Livro) duo.getKey();
             String id = aux.getId();
             if (livroId == id) iterator.remove();
         }
@@ -118,4 +122,52 @@ public abstract class Usuario {
         return this.tempoEmprestimo;
     };
 
+    public void removerEmprestimo(Livro livro) {
+
+        // Buscar livro emprestado e exemplar
+        Pair emprestado = null;
+        String livroId = livro.getId();
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+            Pair pair = (Pair) iterator.next();
+            Livro aux = (Livro) pair.getKey();
+            String id = aux.getId();
+            if (livroId == id) {
+                emprestado = pair;
+                break;
+            }
+        }
+
+        // Remover da lista de emprestimos
+        Livro aux = null;
+        for (Iterator iterator = this.listaEmprestimos.iterator(); iterator.hasNext();) {
+            Pair pair = (Pair) iterator.next();
+            aux = (Livro) pair.getKey();
+            String id = aux.getId();
+            if (livroId == id) {
+                iterator.remove();
+                break;
+            }
+        }
+        this.qtdEmprestimos -= 1;
+
+        // Mudar disponibilidade do exemplar do livro aux
+        Exemplar exemplar = emprestado.getValue();
+        aux.setDisponibilidadeExemplarLista(exemplar);
+    };
+
+    public void printReservas() {
+        System.out.println("Lista das reservas:");
+        for (Iterator iterator = this.listaReservas.iterator(); iterator.hasNext();) {
+            LivDat duo = (LivDat) iterator.next();
+
+            Livro livro = (Livro) duo.getKey();
+            String titulo = livro.getTitulo();
+
+            Date data = (Date) duo.getValue();
+            String dataString = data.toString();
+
+            System.out.println("Titulo do livro: " + titulo + " data de realizacao da reserva: " + dataString + ".");
+        }
+        System.out.println();
+    };
 }

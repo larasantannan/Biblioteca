@@ -27,7 +27,7 @@ public class IUSistema {
 
 	private static void tratarDados(String[] parametros) {
 
-		System.out.println("Digite o comando desejado.\n"); // Apagar linha
+		System.out.println("\nDigite o comando desejado:\n"); // Apagar linha
 
 		// Ler a entrada
 		Scanner sc = new Scanner(System.in);
@@ -72,7 +72,6 @@ public class IUSistema {
         while (true) {
             // Entrada de dados
     	    tratarDados(parametros);
-
     	    executarComando(parametros);
         }
 

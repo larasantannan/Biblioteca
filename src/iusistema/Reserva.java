@@ -1,6 +1,8 @@
 
 package iusistema;
 
+import java.util.Date;
+
 public class Reserva {
 
     private static Reserva instancia;
